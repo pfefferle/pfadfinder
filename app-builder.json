@@ -13,6 +13,7 @@
     "license": "GPL-3.0-or-later",
     "author": { "github": "pfefferle", "display_name": "Matthias Pfefferle" },
     "share_code": "PFAD",
+    "source_repo": "https://github.com/pfefferle/pfadfinder",
     "permissions": {
       "camera": false, "microphone": false, "imu": false, "network": true,
       "additional_hardware": true, "background_service": true, "external_display": false
