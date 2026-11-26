@@ -1,5 +1,8 @@
 # Pfadfinder - the ultimate wardriver for the CardputerZero
 
+> [!WARNING]
+> Pfadfinder is educational software, made to learn about the radios around you. Logging and uploading Wi-Fi, Bluetooth, aircraft and mesh data may be restricted where you live, so please check your local laws before you use it. You use it at your own risk, and I am not responsible for any misuse.
+
 ![Pfadfinder status screen](screenshots/status.png)
 
 Pfadfinder is a wardriver for the [M5Stack CardputerZero](https://docs.m5stack.com/en/CardputerZero). It logs Wi-Fi and Bluetooth networks with their GPS position while you drive or walk, aircraft with an RTL-SDR and the mesh nodes a Meshtastic or MeshCore device hears, and uploads them to [WiGLE](https://wigle.net), [WDGWars](https://wdgwars.pl) and [Wardrift](https://wardrift.net).
@@ -154,10 +157,6 @@ The second command writes `build/pfadfinder_<version>_all.deb`.
 The uploads to WiGLE, WDGWars and Wardrift use the site clients of [wdgwars-uploader](https://github.com/RocketGod-git/wdgwars-uploader) by RocketGod (MIT), which does the same job on Windows. They are bundled unchanged in `vendor/wdgwars_uploader/`, pinned to the commit in `vendor/REFERENCE`; `tools/update-reference.sh <commit>` refreshes them.
 
 The package ships [dbus-fast](https://github.com/Bluetooth-Devices/dbus-fast) (MIT) to talk to BlueZ, and [meshtastic](https://github.com/meshtastic/python) (GPL-3.0), [meshcore](https://github.com/meshcore-dev/meshcore_py) (MIT) and their pure-Python dependencies for mesh nodes, pinned in `packaging/mesh-requirements.txt`. The screen uses the [Terminus](https://files.ax86.net/terminus-ttf/) font (SIL Open Font License). Their licenses are included in the package.
-
-## Disclaimer
-
-Pfadfinder is educational software, made to learn about the radios around you. Logging and uploading Wi-Fi, Bluetooth, aircraft and mesh data may be restricted where you live, so please check your local laws before you use it. You use it at your own risk, and I am not responsible for any misuse.
 
 ## License
 
