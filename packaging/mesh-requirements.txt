@@ -1,0 +1,12 @@
+# Libraries for a Meshtastic or MeshCore node on USB, bundled as pure-Python wheels.
+# Debian bookworm has protobuf 3.21 and bleak 0.20; meshtastic needs protobuf >= 4.21.12.
+# pyserial, pycryptodome, pyyaml and pypubsub come from Debian (see control.in).
+bleak==1.1.1 --hash=sha256:e601371396e357d95ee3c256db65b7da624c94ef6f051d47dfce93ea8361c22e
+meshcore==2.3.19 --hash=sha256:d636a847631501404e7d2026d41e8190274ad12caf3962138020250c9ff45000
+meshtastic==2.7.11 --hash=sha256:adb020f2cd7ace53896c6bf487f2d2136498dd88052c41a2aa6fb7a4634971b5
+packaging==26.3 --hash=sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c
+protobuf==7.36.2 --hash=sha256:bdb3a345d48db958e6ce1f18e508beb0cc981d64f24088427549c866cd039f1e
+pycayennelpp==2.4.0 --hash=sha256:a3e69ea4da9e2971a44d1e275d5555617b2345eea752325f28c0356f64901d62
+pyserial-asyncio-fast==0.16 --hash=sha256:88939d94e341a04c0c8bc3c1ed4e874439cb5a1e21ccfb0fd7315a8e45df1687
+tabulate==0.10.0 --hash=sha256:f0b0622e567335c8fabaaa659f1b33bcb6ddfe2e496071b743aa113f8774f2d3
+typing-extensions==4.16.0 --hash=sha256:481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8

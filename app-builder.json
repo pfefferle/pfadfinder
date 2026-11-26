@@ -1,0 +1,24 @@
+{
+  "package_name": "pfadfinder",
+  "version": "0.1.0",
+  "app_name": "Pfadfinder",
+  "bin_name": "pfadfinder",
+  "description": "Wardriver for Wi-Fi, Bluetooth, aircraft and mesh nodes with GPS",
+  "store": {
+    "summary": "Wardriver for Wi-Fi, Bluetooth, aircraft and mesh nodes with GPS",
+    "description": "Pfadfinder logs Wi-Fi and Bluetooth networks with GPS while you drive or walk, aircraft with an RTL-SDR, and the mesh nodes a Meshtastic or MeshCore device on USB hears. It keeps running with the screen off to save battery and uploads to WiGLE, WDGWars and Wardrift. USB Wi-Fi and Bluetooth dongles are used when plugged in; the internal radios are the fallback. GPS comes from a USB receiver, the Grove port or the Cap LoRa-1262.",
+    "categories": ["Radio & Comms", "Security"],
+    "screenshots": ["screenshots/status.png"],
+    "icon": "packaging/icon.png",
+    "license": "GPL-3.0-or-later",
+    "author": { "github": "pfefferle", "display_name": "Matthias Pfefferle" },
+    "share_code": "PFAD",
+    "permissions": {
+      "camera": false, "microphone": false, "imu": false, "network": true,
+      "additional_hardware": true, "background_service": true, "external_display": false
+    },
+    "locales": {
+      "de": { "title": "Pfadfinder", "summary": "Wardriver für WLAN, Bluetooth, Flugzeuge und Mesh-Knoten mit GPS" }
+    }
+  }
+}

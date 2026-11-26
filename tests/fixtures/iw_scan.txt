@@ -1,0 +1,68 @@
+BSS 00:11:22:33:44:01(on wlan0)
+	last seen: 1234.567s [boottime]
+	TSF: 123456789 usec (0d, 00:02:03)
+	freq: 2437.0
+	beacon interval: 100 TUs
+	capability: ESS Privacy ShortSlotTime (0x0411)
+	signal: -55.00 dBm
+	last seen: 10 ms ago
+	SSID: MyNet
+	Supported rates: 1.0* 2.0* 5.5* 11.0* 
+	DS Parameter set: channel 6
+	RSN:	 * Version: 1
+		 * Group cipher: CCMP
+		 * Pairwise ciphers: CCMP
+		 * Authentication suites: PSK
+		 * Capabilities: 16-PTKSA-RC 1-GTKSA-RC (0x000c)
+BSS 00:11:22:33:44:02(on wlan0)
+	freq: 5180
+	capability: ESS Privacy SpectrumMgmt (0x0111)
+	signal: -71.00 dBm
+	SSID: Mixed
+	RSN:	 * Version: 1
+		 * Group cipher: CCMP
+		 * Pairwise ciphers: CCMP
+		 * Authentication suites: PSK SAE
+		 * Capabilities: 16-PTKSA-RC 1-GTKSA-RC MFP-capable (0x008c)
+BSS 00:11:22:33:44:03(on wlan0)
+	freq: 2412
+	capability: ESS Privacy (0x0011)
+	signal: -80.00 dBm
+	SSID: Old
+	WPA:	 * Version: 1
+		 * Group cipher: TKIP
+		 * Pairwise ciphers: TKIP
+		 * Authentication suites: PSK
+BSS 00:11:22:33:44:04(on wlan0)
+	freq: 2462
+	capability: ESS Privacy (0x0011)
+	signal: -82.00 dBm
+	SSID: Ancient
+BSS 00:11:22:33:44:05(on wlan0)
+	freq: 2412
+	capability: ESS (0x0001)
+	signal: -60.00 dBm
+	SSID: Caf\xc3\xa9\x2c1
+BSS 00:11:22:33:44:06(on wlan0)
+	freq: 2422
+	capability: ESS Privacy (0x0011)
+	signal: -67.00 dBm
+	SSID: 
+	RSN:	 * Version: 1
+		 * Group cipher: CCMP
+		 * Pairwise ciphers: CCMP TKIP
+		 * Authentication suites: IEEE 802.1X
+BSS 00:11:22:33:44:07(on wlan0)
+	freq: 2417
+	capability: ESS Privacy (0x0011)
+	signal: -77.00 dBm
+	SSID: WPA3only
+	RSN:	 * Version: 1
+		 * Group cipher: CCMP
+		 * Pairwise ciphers: CCMP
+		 * Authentication suites: SAE
+BSS 00:11:22:33:44:08(on wlan0)
+	freq: 2427
+	capability: ESS (0x0001)
+	signal: -88.00 dBm
+	SSID: bad\xff\xfebytes

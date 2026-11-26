@@ -1,0 +1,24 @@
+[Unit]
+Description=Pfadfinder wardriving core
+After=bluetooth.target gpsd.socket network.target
+Wants=bluetooth.target gpsd.socket
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+SupplementaryGroups=pfadfinder bluetooth netdev dialout video input plugdev
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_RAW
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_RAW
+RuntimeDirectory=pfadfinder
+RuntimeDirectoryMode=0750
+Environment=PYTHONPATH=/usr/share/APPLaunch/apps/pfadfinder:/usr/share/APPLaunch/apps/pfadfinder/vendor
+Environment=PYTHONUNBUFFERED=1
+Environment=PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
+ExecStart=/usr/bin/python3 -m pfadfinder.core
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=15
+
+[Install]
+WantedBy=multi-user.target

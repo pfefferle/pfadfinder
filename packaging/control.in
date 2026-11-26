@@ -1,0 +1,13 @@
+Package: pfadfinder
+Version: @VERSION@
+Architecture: all
+Maintainer: @MAINTAINER@
+Depends: python3 (>= 3.11), python3-pil, python3-numpy, python3-requests, bluez, gpsd, iw, fonts-dejavu-core, rtl-sdr, python3-serial, python3-pycryptodome, python3-yaml, python3-pubsub
+Section: net
+Priority: optional
+Description: Wardriver for the M5Stack CardputerZero
+ Logs Wi-Fi and Bluetooth networks with GPS, aircraft with an RTL-SDR and
+ the mesh nodes a Meshtastic or MeshCore device on USB hears, and uploads
+ them to WiGLE, WDGWars and Wardrift. Uses USB dongles when
+ present and the internal radios otherwise. Runs as a background service
+ with a keyboard UI.

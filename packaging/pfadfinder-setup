@@ -1,0 +1,51 @@
+#!/bin/sh
+# GPS setup for the Grove port and the Cap LoRa-1262 (both use the UART on GPIO14/15) plus USB
+# receivers. Runs automatically on install; safe to run again. An existing gpsd setup (for example
+# the CardputerZero image's cap GPS at 115200 baud) is kept as it is.
+set -e
+ROOT="${PFADFINDER_ROOT:-}"   # for tests only
+[ "$(id -u)" -eq 0 ] || { echo "run with sudo"; exit 1; }
+
+CONFIG=$ROOT/boot/firmware/config.txt
+[ -f "$CONFIG" ] || CONFIG=$ROOT/boot/config.txt
+CMDLINE=$ROOT/boot/firmware/cmdline.txt
+[ -f "$CMDLINE" ] || CMDLINE=$ROOT/boot/cmdline.txt
+reboot_needed=no
+
+if [ -f "$CONFIG" ] && ! grep -q '^enable_uart=1' "$CONFIG"; then
+    cp "$CONFIG" "$CONFIG.pfadfinder.bak"
+    echo 'enable_uart=1' >> "$CONFIG"
+    echo "enabled the UART in $CONFIG (backup: $CONFIG.pfadfinder.bak)"
+    reboot_needed=yes
+fi
+if [ -f "$CMDLINE" ] && grep -q 'console=serial0' "$CMDLINE"; then
+    cp "$CMDLINE" "$CMDLINE.pfadfinder.bak"
+    sed -i 's/console=serial0,[0-9]* //' "$CMDLINE"
+    echo "removed the serial console from $CMDLINE (backup: $CMDLINE.pfadfinder.bak)"
+    reboot_needed=yes
+fi
+
+GPSD=$ROOT/etc/default/gpsd
+gpsd_changed=no
+if [ ! -f "$GPSD" ]; then
+    printf 'START_DAEMON="true"\nDEVICES="/dev/serial0"\nUSBAUTO="true"\nGPSD_OPTIONS=""\n' > "$GPSD"
+    gpsd_changed=yes
+elif ! grep -q '^DEVICES=.*/dev/serial0' "$GPSD"; then
+    cp "$GPSD" "$GPSD.pfadfinder.bak"
+    if grep -q '^DEVICES=' "$GPSD"; then
+        sed -i 's|^DEVICES="\(.*\)"|DEVICES="/dev/serial0 \1"|; s|^DEVICES="/dev/serial0 "|DEVICES="/dev/serial0"|' "$GPSD"
+    else
+        echo 'DEVICES="/dev/serial0"' >> "$GPSD"
+    fi
+    gpsd_changed=yes
+fi
+if [ "$gpsd_changed" = yes ]; then
+    echo "gpsd now also reads /dev/serial0"
+    [ -n "$ROOT" ] || systemctl restart gpsd.socket gpsd.service >/dev/null 2>&1 || true
+else
+    echo "gpsd already reads /dev/serial0, left unchanged"
+fi
+if [ "$reboot_needed" = yes ]; then
+    systemctl disable --now serial-getty@ttyS0.service serial-getty@ttyAMA0.service >/dev/null 2>&1 || true
+    echo "Reboot to apply the UART change."
+fi

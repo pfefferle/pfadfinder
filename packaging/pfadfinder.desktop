@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Pfadfinder
+Exec=/usr/share/APPLaunch/bin/pfadfinder
+Terminal=false
+Icon=share/images/pfadfinder.png
+Type=Application

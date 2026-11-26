@@ -1,0 +1,6 @@
+BSS 00:11:22:33:44:99(on wlan0)
+	freq: 2412
+	capability: ESS (0x0001)
+	signal: -50.00 dBm
+	last seen: 25000 ms ago
+	SSID: Behind

@@ -1,0 +1,26 @@
+#!/bin/sh
+set -e
+if [ "$1" = "configure" ]; then
+    groupadd -f pfadfinder
+    # Run the service as the device's main user (uid 1000, the one the launcher runs as).
+    # The packaged unit says User=pi; a drop-in overrides it when that user is someone else.
+    user=$(getent passwd 1000 | cut -d: -f1)
+    [ -n "$user" ] || user=pi
+    if id -u "$user" >/dev/null 2>&1; then
+        mkdir -p /etc/systemd/system/pfadfinder-core.service.d
+        printf '[Service]\nUser=%s\nGroup=%s\n' "$user" "$user" \
+            > /etc/systemd/system/pfadfinder-core.service.d/10-user.conf
+        for grp in pfadfinder bluetooth netdev dialout video input plugdev; do
+            getent group "$grp" >/dev/null && usermod -aG "$grp" "$user" || true
+        done
+    fi
+    # GPS: let gpsd read the Grove/cap UART and USB receivers. Keeps an existing gpsd setup.
+    /usr/share/APPLaunch/apps/pfadfinder/pfadfinder-setup || true
+    udevadm control --reload >/dev/null 2>&1 || true
+    udevadm trigger --subsystem-match=backlight --subsystem-match=usb --subsystem-match=tty >/dev/null 2>&1 || true
+    systemd-tmpfiles --create /usr/lib/tmpfiles.d/pfadfinder.conf >/dev/null 2>&1 || true
+    systemctl daemon-reload >/dev/null 2>&1 || true
+    systemctl enable pfadfinder-core.service >/dev/null 2>&1 || true
+    systemctl restart pfadfinder-core.service >/dev/null 2>&1 || true
+fi
+exit 0

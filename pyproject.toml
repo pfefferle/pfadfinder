@@ -1,0 +1,13 @@
+[project]
+name = "pfadfinder"
+version = "0.1.0"
+description = "Wardriving for the M5Stack CardputerZero"
+requires-python = ">=3.11"
+license = { text = "GPL-3.0-or-later" }
+
+[project.entry-points."pfadfinder.sources"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+pythonpath = [".", "vendor"]
+testpaths = ["tests"]

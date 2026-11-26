@@ -1,0 +1,13 @@
+# Pfadfinder: let the non-root service and UI switch the backlight and the Ethernet chip.
+SUBSYSTEM=="backlight", ACTION=="add|change", RUN+="/bin/chgrp video /sys%p/brightness /sys%p/bl_power", RUN+="/bin/chmod g+w /sys%p/brightness /sys%p/bl_power"
+SUBSYSTEM=="usb", ACTION=="add|change", ATTR{idVendor}=="0fe6", ATTR{idProduct}=="9900", RUN+="/bin/chgrp pfadfinder /sys%p/authorized", RUN+="/bin/chmod g+w /sys%p/authorized"
+# Mesh nodes on USB serial (pfadfinder/sources/mesh_usb.py MESH_USB_IDS): keep ModemManager off them.
+SUBSYSTEM=="tty", ACTION=="add|change", ATTRS{idVendor}=="303a", ATTRS{idProduct}=="1001", ENV{ID_MM_DEVICE_IGNORE}="1"
+SUBSYSTEM=="tty", ACTION=="add|change", ATTRS{idVendor}=="303a", ATTRS{idProduct}=="4001", ENV{ID_MM_DEVICE_IGNORE}="1"
+SUBSYSTEM=="tty", ACTION=="add|change", ATTRS{idVendor}=="239a", ENV{ID_MM_DEVICE_IGNORE}="1"
+SUBSYSTEM=="tty", ACTION=="add|change", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d4", ENV{ID_MM_DEVICE_IGNORE}="1"
+SUBSYSTEM=="tty", ACTION=="add|change", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", ENV{ID_MM_DEVICE_IGNORE}="1"
+SUBSYSTEM=="tty", ACTION=="add|change", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ENV{ID_MM_DEVICE_IGNORE}="1"
+# Debian's 60-gpsd.rules hands CP210x to gpsd, which would hold a Heltec node's port. A CP210x GPS
+# then needs its port in DEVICES= in /etc/default/gpsd.
+SUBSYSTEM=="tty", ACTION=="add|change", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ENV{SYSTEMD_WANTS}=""

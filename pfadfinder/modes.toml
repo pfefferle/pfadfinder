@@ -1,0 +1,20 @@
+[drive]
+title = "Drive"
+description = "Wi-Fi and Bluetooth with GPS,\non foot or in the car.\nA mesh node on USB is used too."
+sources = ["gps", "wifi", "ble"]
+# a Meshtastic or MeshCore node joins when it is plugged in
+optional = ["mesh-usb"]
+
+[sky]
+title = "Sky"
+description = "Aircraft with an RTL-SDR stick,\nno GPS fix needed.\nA mesh node on USB is used too."
+# aircraft report their own position; GPS only helps the decoder's range
+sources = ["adsb"]
+optional = ["gps", "mesh-usb"]
+
+[mesh]
+title = "Mesh"
+description = "Only a Meshtastic or MeshCore node on USB.\nNodes send their own position,\nso GPS is optional."
+# no Wi-Fi or Bluetooth scans, so it uses the least battery
+sources = ["mesh-usb"]
+optional = ["gps"]

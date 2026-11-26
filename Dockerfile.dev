@@ -1,0 +1,8 @@
+FROM debian:bookworm
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      python3 python3-pil python3-numpy python3-requests python3-pytest \
+      python3-pytest-asyncio python3-pip dpkg-dev fonts-dejavu-core iw \
+      python3-serial python3-pycryptodome python3-yaml python3-pubsub \
+    && rm -rf /var/lib/apt/lists/*
+RUN pip install --break-system-packages --no-cache-dir dbus-fast==2.24.3
+ENV PYTHONDONTWRITEBYTECODE=1

@@ -1,0 +1,9 @@
+#!/bin/sh
+# Run a command inside the Debian bookworm dev container (matches the device's userland).
+set -e
+cd "$(dirname "$0")"
+if ! docker image inspect pfadfinder-dev >/dev/null 2>&1 || [ Dockerfile.dev -nt .superpowers/.dev-image ]; then
+  docker build -q -f Dockerfile.dev -t pfadfinder-dev . >/dev/null
+  mkdir -p .superpowers && touch .superpowers/.dev-image
+fi
+exec docker run --rm -e PFADFINDER_MAINTAINER -v "$PWD":/src -w /src pfadfinder-dev "$@"
