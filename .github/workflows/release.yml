@@ -1,0 +1,65 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+env:
+  # CardputerZero/AppBuilder commit that provides czdev; bump deliberately.
+  APPBUILDER_REF: 042356c579d728d684eccb68ed9f8669a32822bc
+  PFADFINDER_MAINTAINER: Matthias Pfefferle <pfefferle@gmail.com>
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check tag matches version
+        id: version
+        run: |
+          version=$(python3 -c 'import pfadfinder; print(pfadfinder.__version__)')
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match pfadfinder.__version__ $version"
+            exit 1
+          fi
+          echo "deb=build/pfadfinder_${version}_all.deb" >> "$GITHUB_OUTPUT"
+
+      - name: Test
+        run: ./dev pytest -q
+
+      - name: Build package
+        run: ./dev packaging/build-deb.sh
+
+      - name: GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" "${{ steps.version.outputs.deb }}" --title "$GITHUB_REF_NAME" --generate-notes
+
+      - uses: actions/checkout@v4
+        with:
+          repository: CardputerZero/AppBuilder
+          ref: ${{ env.APPBUILDER_REF }}
+          path: .appbuilder
+
+      - name: Publish to the CardputerZero store
+        env:
+          # Classic token of the package owner with the public_repo scope.
+          CZDEV_TOKEN: ${{ secrets.CZDEV_TOKEN }}
+          GH_TOKEN: ${{ secrets.CZDEV_TOKEN }}
+        run: |
+          mkdir -p ~/.czdev
+          python3 - <<'EOF'
+          import json, os, pathlib
+          path = pathlib.Path.home() / ".czdev" / "credentials"
+          path.write_text(json.dumps({"github_token": os.environ["CZDEV_TOKEN"], "github_username": "pfefferle"}))
+          path.chmod(0o600)
+          EOF
+          gh auth setup-git
+          git config --global url."https://github.com/".insteadOf "git@github.com:"
+          git config --global user.name "Matthias Pfefferle"
+          git config --global user.email "pfefferle@gmail.com"
+          .appbuilder/czdev publish --deb "${{ steps.version.outputs.deb }}"

@@ -155,6 +155,10 @@ The uploads to WiGLE, WDGWars and Wardrift use the site clients of [wdgwars-uplo
 
 The package ships [dbus-fast](https://github.com/Bluetooth-Devices/dbus-fast) (MIT) to talk to BlueZ, and [meshtastic](https://github.com/meshtastic/python) (GPL-3.0), [meshcore](https://github.com/meshcore-dev/meshcore_py) (MIT) and their pure-Python dependencies for mesh nodes, pinned in `packaging/mesh-requirements.txt`. The screen uses the [Terminus](https://files.ax86.net/terminus-ttf/) font (SIL Open Font License). Their licenses are included in the package.
 
+## Disclaimer
+
+Pfadfinder is educational software, made to learn about the radios around you. Logging and uploading Wi-Fi, Bluetooth, aircraft and mesh data may be restricted where you live, so please check your local laws before you use it. You use it at your own risk, and I am not responsible for any misuse.
+
 ## License
 
 GPL-3.0-or-later, see [LICENSE](LICENSE). The bundled third-party code keeps its own license.
