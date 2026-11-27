@@ -28,11 +28,12 @@ jobs:
           fi
           echo "deb=build/pfadfinder_${version}_all.deb" >> "$GITHUB_OUTPUT"
 
-      - name: Test
-        run: ./dev pytest -q
-
+      # Build first: tests/test_packaging.py inspects the built .deb.
       - name: Build package
         run: ./dev packaging/build-deb.sh
+
+      - name: Test
+        run: ./dev pytest -q
 
       - name: GitHub release
         env:
