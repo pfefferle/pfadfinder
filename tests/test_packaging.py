@@ -267,6 +267,31 @@ def test_postinst_retriggers_tty_rules(tree, tmp_path):
     assert "--subsystem-match=tty" in (tmp_path / "ctl" / "postinst").read_text()
 
 
+# The store's own checks (CardputerZero/packages: .github/scripts/install_path_policy.py and
+# .github/workflows/validate-pr.yml); a match there rejects the submission.
+STORE_UDEV_EXEC_KEY = re.compile(r"(?:^|[\s,])(?:RUN|PROGRAM|IMPORT\{program\})(?!\w)")
+STORE_DANGEROUS_SCRIPT = (r"rm[[:space:]]+(-[a-zA-Z]+[[:space:]]+)*(/([[:space:]]|$)|/(bin|etc|usr|var|home|boot|lib))"
+                          r"|(curl|wget)[^|]*\|[[:space:]]*(ba)?sh|mkfs|/etc/(passwd|shadow|sudoers)|dd[[:space:]][^|]*of=/dev/")
+
+
+def test_udev_rules_run_no_programs(tree):
+    rules = list((tree / "usr/lib/udev/rules.d").glob("*"))
+    assert rules
+    for path in rules:
+        for line in path.read_text().splitlines():
+            line = line.strip()
+            assert not (line and not line.startswith("#") and STORE_UDEV_EXEC_KEY.search(line)), (path.name, line)
+
+
+def test_maintainer_scripts_pass_store_check(tree, tmp_path):
+    subprocess.run(["dpkg-deb", "-e", str(DEB), str(tmp_path / "ctl")], check=True)
+    scripts = [p for p in (tmp_path / "ctl").iterdir() if p.name in ("preinst", "postinst", "prerm", "postrm")]
+    assert scripts
+    for path in scripts:
+        res = subprocess.run(["grep", "-nE", STORE_DANGEROUS_SCRIPT, str(path)], capture_output=True, text=True)
+        assert res.returncode == 1, (path.name, res.stdout)
+
+
 def test_service_uses_pure_python_protobuf(tree):
     unit = (tree / "lib/systemd/system/pfadfinder-core.service").read_text()
     assert "Environment=PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python" in unit

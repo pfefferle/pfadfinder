@@ -17,7 +17,7 @@ if [ "$1" = "configure" ]; then
     # GPS: let gpsd read the Grove/cap UART and USB receivers. Keeps an existing gpsd setup.
     /usr/share/APPLaunch/apps/pfadfinder/pfadfinder-setup || true
     udevadm control --reload >/dev/null 2>&1 || true
-    udevadm trigger --subsystem-match=backlight --subsystem-match=usb --subsystem-match=tty >/dev/null 2>&1 || true
+    udevadm trigger --subsystem-match=tty >/dev/null 2>&1 || true
     systemd-tmpfiles --create /usr/lib/tmpfiles.d/pfadfinder.conf >/dev/null 2>&1 || true
     systemctl daemon-reload >/dev/null 2>&1 || true
     systemctl enable pfadfinder-core.service >/dev/null 2>&1 || true

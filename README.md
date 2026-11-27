@@ -48,7 +48,7 @@ The logging runs as a background service, so the screen app can be closed and th
 - The screen turns off 10 seconds after the last key press. Any key wakes it up and does nothing else. In "mount" mode (Settings) it dims and keeps updating every 5 seconds instead.
 - The scan interval follows your speed: every 3 seconds while driving, every 10 seconds while walking, every 60 seconds after standing still for a minute. Without a GPS fix the scanners pause.
 - Bluetooth discovery runs in windows of at most 10 seconds.
-- During a wardrive the CPU uses the `powersave` governor, three of the four cores are switched off and the Ethernet chip is disabled. Everything is restored when you stop.
+- During a wardrive the CPU uses the `powersave` governor and three of the four cores are switched off. Everything is restored when you stop.
 
 The power numbers in the app are estimates until I measure them on the device. `python3 -m pfadfinder.tools.powerlog` logs the real battery draw for that.
 
@@ -57,8 +57,8 @@ The power numbers in the app are estimates until I measure them on the device. `
 Pfadfinder is a Debian package for the CardputerZero launcher (APPLaunch).
 
 ```sh
-scp pfadfinder_0.1.0_all.deb pi@<device>:/tmp/
-ssh pi@<device> sudo apt install /tmp/pfadfinder_0.1.0_all.deb
+scp pfadfinder_0.1.1_all.deb pi@<device>:/tmp/
+ssh pi@<device> sudo apt install /tmp/pfadfinder_0.1.1_all.deb
 ```
 
 The package installs the `pfadfinder-core` service (runs as `pi`, not as root), adds `pi` to the groups it needs and adds "Pfadfinder" to the launcher. Log out and back in once, so the new groups apply.

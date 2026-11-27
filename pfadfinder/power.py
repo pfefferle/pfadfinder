@@ -1,7 +1,8 @@
 """Power knobs in sysfs (CPU governor, cores, Ethernet chip) and battery readout.
 
-Write access for the non-root service comes from the udev rules and tmpfiles.d
-snippet installed by the package. Any write that fails is logged once and
+Write access for the non-root service comes from the tmpfiles.d snippet
+installed by the package; the Ethernet chip has none, as the store rejects
+udev RUN rules. Any write that fails is logged once and
 skipped: power saving is best effort, never a reason to stop logging.
 """
 

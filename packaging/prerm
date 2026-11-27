@@ -4,7 +4,8 @@ if [ "$1" = "remove" ] || [ "$1" = "upgrade" ]; then
     systemctl disable --now pfadfinder-core.service >/dev/null 2>&1 || true
 fi
 if [ "$1" = "remove" ]; then
-    rm -rf /etc/systemd/system/pfadfinder-core.service.d
+    # Removes the User= drop-in postinst wrote to /etc/systemd/system/pfadfinder-core.service.d.
+    systemctl revert pfadfinder-core.service >/dev/null 2>&1 || true
     systemctl daemon-reload >/dev/null 2>&1 || true
 fi
 exit 0

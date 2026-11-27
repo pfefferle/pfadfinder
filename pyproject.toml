@@ -1,6 +1,6 @@
 [project]
 name = "pfadfinder"
-version = "0.1.0"
+version = "0.1.1"
 description = "Wardriving for the M5Stack CardputerZero"
 requires-python = ">=3.11"
 license = { text = "GPL-3.0-or-later" }

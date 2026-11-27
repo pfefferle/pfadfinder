@@ -1,5 +1,6 @@
-# Pfadfinder: CPU power knobs for the wardrive power profile.
+# Pfadfinder: CPU power knobs for the wardrive power profile, and the backlight for the UI.
 z /sys/devices/system/cpu/cpu1/online 0664 root pfadfinder -
 z /sys/devices/system/cpu/cpu2/online 0664 root pfadfinder -
 z /sys/devices/system/cpu/cpu3/online 0664 root pfadfinder -
 z /sys/devices/system/cpu/cpufreq/policy0/scaling_governor 0664 root pfadfinder -
+z /sys/class/backlight/*/brightness 0664 root video -

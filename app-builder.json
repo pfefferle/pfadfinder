@@ -1,6 +1,6 @@
 {
   "package_name": "pfadfinder",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "app_name": "Pfadfinder",
   "bin_name": "pfadfinder",
   "description": "Wardriver for Wi-Fi, Bluetooth, aircraft and mesh nodes with GPS",
